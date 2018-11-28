@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('geokekec', 'root', 'pass', {
     host: 'localhost',
     dialect: 'postgres',
+    operatorsAliases: false,
     pool: {
       max: 10,
       min: 0,
@@ -11,7 +12,7 @@ const sequelize = new Sequelize('geokekec', 'root', 'pass', {
     }
 });
 
-const stateData = sequelize.define('stateData', {
+const StateData = sequelize.define('stateData', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -26,5 +27,5 @@ sequelize.sync({ force: true })
     });
 
 module.exports = {
-    stateData
+    StateData
 }

@@ -7,10 +7,8 @@ app.use(bodyParser.json());
 
 
 // API ENDPOINTS
-app.get('/api/getregions', (req, res) => {
-    const body = req.body;
-
-    stateData.findById(body.id)
+app.get('/api/getregions:id', (req, res) => {
+    stateData.findById(req.params.id)
         .then(states => res.json(states));
 });
 
