@@ -1,7 +1,9 @@
+require('dotenv').config()
 const Sequelize = require('sequelize');
+const skCityModel = require('./models/sk_obce');
 
-const sequelize = new Sequelize('geokekec', 'root', 'pass', {
-    host: 'localhost',
+const sequelize = new Sequelize(process.env.DB_SCHEMA, process.env.DB_USER, process.env.DB_PASS, {
+    host: process.env.DB_HOST,
     dialect: 'postgres',
     operatorsAliases: false,
     pool: {
@@ -12,20 +14,15 @@ const sequelize = new Sequelize('geokekec', 'root', 'pass', {
     }
 });
 
-const StateData = sequelize.define('stateData', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: Sequelize.STRING
-});
+//sequelize-auto -h DB_HOST -d DB_SCHEMA -u DB_USER -x DB_PASS -p 5432 -e postgres -o ./models
 
-sequelize.sync({ force: true })
+const skCity = skCityModel(sequelize, Sequelize);
+
+sequelize.sync()
     .then(() => {
         console.log('DB Synced');
     });
 
 module.exports = {
-    StateData
+    skCity
 }
